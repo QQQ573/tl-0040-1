@@ -1,0 +1,37 @@
+{
+  "faultLabels": {
+    "screen_crack": "屏幕碎裂",
+    "water_damage": "进水受潮",
+    "battery_swelling": "电池鼓包",
+    "no_power": "无法开机",
+    "speaker_issue": "扬声器故障",
+    "camera_issue": "摄像头问题",
+    "button_issue": "按键失灵",
+    "charging_issue": "充电故障"
+  },
+  "serviceTypes": {
+    "screen_repair": "屏幕维修",
+    "water_repair": "进水维修",
+    "battery_repair": "电池更换",
+    "general_repair": "综合维修",
+    "diagnosis": "故障检测"
+  },
+  "inspectionAreas": {
+    "display_area": "显示区域",
+    "power_area": "电源区域",
+    "audio_area": "音频区域",
+    "camera_area": "摄像区域",
+    "button_area": "按键区域",
+    "charging_area": "充电区域"
+  },
+  "tagAreaMapping": {
+    "屏幕碎裂": "display_area",
+    "进水受潮": "power_area",
+    "电池鼓包": "power_area",
+    "无法开机": "power_area",
+    "扬声器故障": "audio_area",
+    "摄像头问题": "camera_area",
+    "按键失灵": "button_area",
+    "充电故障": "charging_area"
+  }
+}

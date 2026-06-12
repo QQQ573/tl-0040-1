@@ -1,0 +1,143 @@
+{
+  "id": 1,
+  "name": "实习前台第一天",
+  "duration": 600,
+  "customerCount": 8,
+  "passScore": 65,
+  "customers": [
+    {
+      "id": 1,
+      "name": "张先生",
+      "phoneBrand": "iPhone",
+      "phoneModel": "iPhone 15 Pro",
+      "faultType": "water_damage",
+      "correctServiceType": "water_repair",
+      "correctPrice": 680,
+      "priceRange": { "min": 600, "max": 750 },
+      "faultTags": ["进水受潮", "无法开机"],
+      "correctTags": ["进水受潮", "无法开机"],
+      "specialRules": ["iphone_water_backup"],
+      "isWaterDamaged": true
+    },
+    {
+      "id": 2,
+      "name": "李女士",
+      "phoneBrand": "Samsung",
+      "phoneModel": "Galaxy Z Fold5",
+      "faultType": "screen_crack",
+      "correctServiceType": "screen_repair",
+      "correctPrice": 1980,
+      "priceRange": { "min": 1800, "max": 2200 },
+      "faultTags": ["屏幕碎裂", "显示异常"],
+      "correctTags": ["屏幕碎裂"],
+      "specialRules": ["samsung_fold_clamp"],
+      "isFoldable": true
+    },
+    {
+      "id": 3,
+      "name": "王先生",
+      "phoneBrand": "Huawei",
+      "phoneModel": "Mate 60 Pro",
+      "faultType": "battery_swelling",
+      "correctServiceType": "battery_repair",
+      "correctPrice": 299,
+      "priceRange": { "min": 250, "max": 350 },
+      "faultTags": ["电池鼓包", "待机时间短"],
+      "correctTags": ["电池鼓包"],
+      "specialRules": ["battery_isolate"]
+    },
+    {
+      "id": 4,
+      "name": "赵女士",
+      "phoneBrand": "Xiaomi",
+      "phoneModel": "Xiaomi 14",
+      "faultType": "screen_crack",
+      "correctServiceType": "screen_repair",
+      "correctPrice": 580,
+      "priceRange": { "min": 500, "max": 650 },
+      "faultTags": ["屏幕碎裂", "触控失灵"],
+      "correctTags": ["屏幕碎裂"]
+    },
+    {
+      "id": 5,
+      "name": "孙先生",
+      "phoneBrand": "iPhone",
+      "phoneModel": "iPhone 14",
+      "faultType": "screen_crack",
+      "correctServiceType": "screen_repair",
+      "correctPrice": 899,
+      "priceRange": { "min": 800, "max": 1000 },
+      "faultTags": ["屏幕碎裂", "显示漏液"],
+      "correctTags": ["屏幕碎裂"]
+    },
+    {
+      "id": 6,
+      "name": "周女士",
+      "phoneBrand": "OPPO",
+      "phoneModel": "Find X7",
+      "faultType": "charging_issue",
+      "correctServiceType": "general_repair",
+      "correctPrice": 180,
+      "priceRange": { "min": 150, "max": 220 },
+      "faultTags": ["充电故障", "接口松动"],
+      "correctTags": ["充电故障"]
+    },
+    {
+      "id": 7,
+      "name": "吴先生",
+      "phoneBrand": "Samsung",
+      "phoneModel": "Galaxy S24 Ultra",
+      "faultType": "camera_issue",
+      "correctServiceType": "general_repair",
+      "correctPrice": 450,
+      "priceRange": { "min": 400, "max": 520 },
+      "faultTags": ["摄像头问题", "拍照模糊"],
+      "correctTags": ["摄像头问题"]
+    },
+    {
+      "id": 8,
+      "name": "郑女士",
+      "phoneBrand": "Huawei",
+      "phoneModel": "P60 Pro",
+      "faultType": "battery_swelling",
+      "correctServiceType": "battery_repair",
+      "correctPrice": 259,
+      "priceRange": { "min": 220, "max": 300 },
+      "faultTags": ["电池鼓包", "机身发热"],
+      "correctTags": ["电池鼓包"],
+      "specialRules": ["battery_isolate"]
+    }
+  ],
+  "ruleCards": [
+    {
+      "id": "screen_quote_first",
+      "title": "碎屏先报价",
+      "content": "所有碎屏维修必须先向客户报出配件费用，经客户确认后方可拆机维修。",
+      "condition": { "faultType": "screen_crack" }
+    },
+    {
+      "id": "water_power_off",
+      "title": "进水先断电",
+      "content": "进水手机必须立即断电处理，禁止尝试开机或充电，以防短路烧坏主板。",
+      "condition": { "faultType": "water_damage" }
+    },
+    {
+      "id": "battery_isolate",
+      "title": "电池鼓包单独隔离",
+      "content": "电池鼓包存在起火风险，必须将电池单独放置在防爆容器中隔离处理。",
+      "condition": { "faultType": "battery_swelling" }
+    },
+    {
+      "id": "iphone_water_backup",
+      "title": "iPhone进水先备份",
+      "content": "iPhone进水机必须先引导客户进行数据备份，确认数据安全后再进行拆机检测。",
+      "condition": { "brand": "iPhone", "faultType": "water_damage" }
+    },
+    {
+      "id": "samsung_fold_clamp",
+      "title": "三星折叠屏禁用通用夹具",
+      "content": "三星折叠屏手机结构特殊，维修时禁止使用通用夹具固定，需使用专用维修支架。",
+      "condition": { "brand": "Samsung", "isFoldable": true }
+    }
+  ]
+}
