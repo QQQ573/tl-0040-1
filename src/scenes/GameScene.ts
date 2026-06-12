@@ -330,12 +330,9 @@ export class GameScene extends Phaser.Scene {
                 wordWrap: { width: 120 },
             }).setOrigin(0.5);
 
-            const containerPos = this.workAreaContainer.getWorldTransformMatrix();
-            const worldPoint = new Phaser.Geom.Point(0, 0);
-            containerPos.transformPoint(area.x, area.y, worldPoint);
             const zone = new Phaser.Geom.Rectangle(
-                worldPoint.x - 70,
-                worldPoint.y - 45,
+                area.x - 70,
+                area.y - 45,
                 140, 90
             );
             areaZones.set(area.key, zone);
@@ -343,16 +340,12 @@ export class GameScene extends Phaser.Scene {
             this.workAreaContainer.add([bg, label]);
         });
 
-        const tagsContainer = this.add.container(0, 400);
         const availableTags = [...new Set([...customer.faultTags, ...customer.correctTags])];
 
         availableTags.forEach((tag, i) => {
             const x = (i - (availableTags.length - 1) / 2) * 120;
-            const tagContainer = this.createDraggableTag(tag, x, 0, areaZones);
-            tagsContainer.add(tagContainer);
+            this.createDraggableTag(tag, x, 400, areaZones);
         });
-
-        this.workAreaContainer.add(tagsContainer);
 
         const confirmBtn = this.add.rectangle(0, 490, 200, 50, 0x27ae60)
             .setInteractive({ useHandCursor: true })
@@ -374,12 +367,11 @@ export class GameScene extends Phaser.Scene {
         x: number,
         y: number,
         areaZones: Map<string, Phaser.Geom.Rectangle>
-    ): Phaser.GameObjects.Container {
+    ): void {
         const container = this.add.container(x, y);
 
         const bg = this.add.rectangle(0, 0, 110, 40, 0xe74c3c)
-            .setStrokeStyle(2, 0xc0392b)
-            .setInteractive({ draggable: true, useHandCursor: true });
+            .setStrokeStyle(2, 0xc0392b);
 
         const text = this.add.text(0, 0, tag, {
             fontSize: '14px',
@@ -389,25 +381,35 @@ export class GameScene extends Phaser.Scene {
 
         container.add([bg, text]);
         (container as any).tagName = tag;
+        (container as any).originalX = x;
+        (container as any).originalY = y;
 
-        container.on('dragstart', () => {
+        this.workAreaContainer.add(container);
+
+        this.input.setDraggable(bg);
+
+        bg.on('dragstart', () => {
             this.draggedTag = container;
             container.setScale(1.1);
+            this.workAreaContainer.bringToTop(container);
         });
 
-        container.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            container.setPosition(dragX, dragY);
+        bg.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
+            const localX = dragX - this.workAreaContainer.x;
+            const localY = dragY - this.workAreaContainer.y;
+            container.x = localX;
+            container.y = localY;
         });
 
-        container.on('dragend', () => {
+        bg.on('dragend', () => {
             container.setScale(1);
-            const matrix = container.getWorldTransformMatrix();
-            const worldPoint = new Phaser.Geom.Point(0, 0);
-            matrix.transformPoint(0, 0, worldPoint);
+            
+            const localX = container.x;
+            const localY = container.y;
 
             let matchedArea: string | null = null;
             areaZones.forEach((zone, areaKey) => {
-                if (zone.contains(worldPoint.x, worldPoint.y)) {
+                if (zone.contains(localX, localY)) {
                     matchedArea = areaKey;
                 }
             });
@@ -420,12 +422,12 @@ export class GameScene extends Phaser.Scene {
                 this.placedTags.delete(tag);
                 bg.setFillStyle(0xe74c3c);
                 bg.setStrokeStyle(2, 0xc0392b);
+                container.x = (container as any).originalX;
+                container.y = (container as any).originalY;
             }
 
             this.draggedTag = undefined;
         });
-
-        return container;
     }
 
     private validateInspection(customer: Customer): void {
